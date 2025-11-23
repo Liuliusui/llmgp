@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="LLM-GGP: Large Language Model Guided Genetic Programming toolkit for LLM-scored subtrees, operators, and fitness shaping.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM-GGP | LLM-guided Genetic Programming</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #6b7280;
+      --surface: #f6f8fc;
+      --card: #ffffff;
+      --accent: #2ed18a;
+      --accent-dark: #1a9e66;
+      --line: #d7deea;
+    }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .title { font-family: 'Google Sans', sans-serif; }
+
+    .hero-llmgp {
+      background: radial-gradient(circle at 20% 20%, rgba(46, 209, 138, 0.15), transparent 25%),
+                  radial-gradient(circle at 80% 10%, rgba(74, 144, 226, 0.12), transparent 22%),
+                  linear-gradient(135deg, #0f172a, #111827);
+      color: #f8fbff;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 14px;
+      margin: 4px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fbff;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .cta-buttons .button {
+      margin: 6px;
+      font-weight: 600;
+    }
+
+    .card-like {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+      height: 100%;
+    }
+
+    .card-like h3 {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .card-like p {
+      color: var(--muted);
+    }
+
+    .muted { color: var(--muted); }
+
+    .flow-box {
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      background: #eef7f0;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .flow-num {
+      font-weight: 700;
+      margin-right: 8px;
+      color: var(--accent-dark);
+    }
+
+    .code-box {
+      background: #0f172a;
+      color: #e8edf7;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      overflow-x: auto;
+      border: 1px solid #1f2937;
+    }
+
+    .section-title { margin-bottom: 8px; }
+    .subtle { font-size: 0.9rem; color: var(--muted); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #ecfdf3;
+      color: #166534;
+      font-weight: 700;
+      margin-right: 10px;
+      margin-top: 4px;
+    }
+
+    .compact-list {
+      margin-top: 6px;
+      margin-bottom: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #d7deea;
+      padding: 20px 0;
+    }
+
+    a.hero-link { color: #d0e8ff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<section class="hero hero-llmgp is-medium">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-vcentered">
+        <div class="column is-7">
+          <h1 class="title is-1 publication-title">
+            <span style="color: var(--accent);">LLM-GGP</span><br>
+            Large Language Model Guided Genetic Programming
+          </h1>
+          <h2 class="subtitle is-4" style="color: #d9e6ff;">
+            LLM-scored subtrees steering crossover, mutation, and fitness shaping for any genetic programming task.
+          </h2>
+          <div class="cta-buttons">
+            <a href="#getting-started" class="button is-light is-rounded">
+              <span class="icon"><i class="fas fa-terminal"></i></span>
+              <span>Get started</span>
+            </a>
+            <a href="#modules" class="button is-link is-rounded">
+              <span class="icon"><i class="fas fa-microchip"></i></span>
+              <span>Modules</span>
+            </a>
+          </div>
+          <div style="margin-top: 14px;">
+            <span class="pill">DEAP + GP</span>
+            <span class="pill">LLM scored subtrees</span>
+            <span class="pill">Composable prompts</span>
+            <span class="pill">Fitness shaping</span>
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="card-like">
+            <p class="heading">Quick facts</p>
+            <p class="muted">LLM-GGP lives in <code>llmggp/</code> and ships:</p>
+            <ul class="compact-list">
+              <li>LLM scoring with caching (<code>llmggp/api.py</code>) plus a composable base prompt.</li>
+              <li>LLM-biased crossover and guarded mutation (<code>llmggp/operators.py</code>).</li>
+              <li>Shared base primitives (<code>llmggp/pset_base.py</code>) for your task-specific GP sets.</li>
+              <li>Fitness shaping (<code>llmggp/fitness.py</code>) with <code>DEFAULT_ALPHA=0.2</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 section-title">What is LLM-GGP?</h2>
+        <div class="content">
+          <p>
+            LLM-GGP is a reusable large-language-model-guided genetic programming toolbox.
+            Subtree semantics scored by an LLM influence crossover, mutation, and fitness shaping to evolve interpretable heuristics for any GP task.
+          </p>
+          <p>
+            Compose your own domain prompt, plug in a task-specific primitive set, and let LLM-scored subtrees steer variation and selection with <code>DEFAULT_K_SELECT=3</code> and <code>DEFAULT_ALPHA=0.2</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered" id="modules">Core modules</h2>
+    <p class="has-text-centered muted" style="margin-bottom: 24px;">Source lives in <code>llmggp/</code>; add your own task modules alongside.</p>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="card-like">
+          <h3>LLM scoring pipeline</h3>
+          <p><code>build_llm_client</code> and <code>llm_score_branch</code> call a base prompt (<code>BASE_SYSTEM_PROMPT</code>) that can be extended via <code>compose_system_prompt</code>, returning a 0-1 score per subtree with caching and graceful degradation.</p>
+          <ul class="compact-list">
+            <li>Env vars: <code>LLM_HOST</code> / <code>LLM_API_KEY</code> / <code>LLM_MODEL</code>.</li>
+            <li>No credentials? return 0.0 and keep the run offline-safe.</li>
+            <li>LRU cache up to 5000 entries to avoid duplicate calls.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card-like">
+          <h3>LLM-biased operators</h3>
+          <p><code>mate_llm_biased</code> and <code>mut_llm_guarded</code> keep the highest-scoring deep subtrees and mutate weaker ones.</p>
+          <ul class="compact-list">
+            <li>Select the <code>k_select=3</code> deepest slices by default.</li>
+            <li>Higher score lowers mutation chance; crossover prefers high-score slices.</li>
+            <li>Fallback: <code>mate_nonllm_subtree</code> for pure GP baselines.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card-like">
+          <h3>Primitive sets</h3>
+          <p><code>add_basic_primitives</code> attaches arithmetic/logic primitives; extend with your domain-specific terminals and primitives.</p>
+          <ul class="compact-list">
+            <li>Works with <code>gp.PrimitiveSetTyped</code> out of the box.</li>
+            <li>Keep task-specific nodes in your own module (e.g., <code>your_task/pset.py</code>).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card-like">
+          <h3>Fitness shaping</h3>
+          <p><code>eval_with_llm_shaping</code> combines simulation cost with LLM importance (<code>shaped = cost * (1 - alpha * mean(score))</code>).</p>
+          <ul class="compact-list">
+            <li><code>DEFAULT_ALPHA=0.2</code> controls how much LLM guidance matters.</li>
+            <li><code>DEFAULT_K_SELECT=3</code> focuses on the deepest subtrees.</li>
+            <li>Stores <code>individual.sim_score</code> for later reporting.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Workflow</h2>
+    <div class="flow-box">
+      <span class="flow-num">1</span>Define your primitive set: start with <code>add_basic_primitives(pset)</code>, then add domain nodes.
+    </div>
+    <div class="flow-box">
+      <span class="flow-num">2</span>Compose a domain prompt with <code>compose_system_prompt</code>.
+    </div>
+    <div class="flow-box">
+      <span class="flow-num">3</span>Wire scorer: <code>partial(llm_score_branch, system_prompt=prompt, client=build_llm_client())</code>.
+    </div>
+    <div class="flow-box">
+      <span class="flow-num">4</span>Run your DEAP loop with LLM-biased operators and shaped fitness.
+    </div>
+    <p class="muted" style="margin-top: 12px;">Set <code>LLM_HOST</code>/<code>LLM_API_KEY</code>/<code>LLM_MODEL</code> for live calls; offline returns 0.0 scores.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-4 section-title">LLM prompt (excerpt)</h3>
+        <div class="code-box">
+<pre>Role: Score GP subtrees in [0.0, 1.0] for your domain.
+Primitives: define in your pset (e.g., add/sub/mul/div/ifelse + domain features).
+Criteria: relevance, discriminativeness, simplicity, robustness, balance.</pre>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="title is-4 section-title">Example subtree</h3>
+        <div class="code-box">
+<pre># String sent to llm_score_branch
+tree = "add( RI(bay, seq), EMP(bay, seq) )"
+
+# Fitness shaping (alpha = 0.2)
+shaped = sim_cost * (1 - alpha * mean(scores))</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light" id="getting-started">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Quick start</h2>
+    <div class="columns">
+      <div class="column">
+        <div class="card-like">
+          <h3>Steps</h3>
+          <ul class="compact-list">
+            <li>Install deps: <code>pip install deap numpy</code> (add tqdm/notebook if needed).</li>
+            <li>Optional: set <code>LLM_HOST</code>/<code>LLM_API_KEY</code>/<code>LLM_MODEL</code> to enable real scoring.</li>
+            <li>Build your pset + prompt, register scorer/ops in a DEAP toolbox.</li>
+            <li>Run your GP loop; log population, hall-of-fame, and scores as needed.</li>
+          </ul>
+          <p class="muted" style="margin-top: 10px;">Without credentials it falls back to pure GP for offline debugging.</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card-like">
+          <h3>Key files</h3>
+          <ul class="compact-list">
+            <li><code>llmggp/api.py</code>: LLM client and scoring cache.</li>
+            <li><code>llmggp/operators.py</code>: LLM-biased crossover/mutation.</li>
+            <li><code>llmggp/fitness.py</code>: Fitness shaping.</li>
+            <li><code>llmggp/psets.py</code>: CRP primitive definitions.</li>
+            <li><code>util/util.py</code>: Data IO and seed helpers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-4">BibTeX</h2>
+<pre><code>@software{llmgp2025,
+  title        = {LLM-GGP: LLM-guided Genetic Programming Toolkit for CRP},
+  author       = {LLM-GGP Team},
+  year         = {2025},
+  note         = {Includes LLM scoring, biased operators, CRP primitives, and simulation pipeline},
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>Codebase: <code>llmggp/</code> · default runner <code>crp/run_crp.py</code> · data from <code>crp/clean</code> and <code>crp/validation</code>.</p>
+      <p class="is-size-7">Built on Bulma; adapt it to your experiment notes or demo needs.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
