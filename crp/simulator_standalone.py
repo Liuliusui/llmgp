@@ -27,9 +27,10 @@ from crp.prompt import CRP_SYSTEM_PROMPT
 PENALTY = 10000
 
 
-LLM_HOST = "xiaoai.plus"       
-LLM_API_KEY = "sk-ENGxAYnudiX98u12I58PPnFmk9RZF3dI0Hr6ldy82Z9d3KSE"    
-LLM_MODEL = "gpt-4o-mini"      
+# Set these via environment when you want LLM scoring; keep blanks to avoid hardcoding secrets.
+LLM_HOST = ""
+LLM_API_KEY = ""
+LLM_MODEL = ""
 LLM_TIMEOUT_MS = "15000"
 
 def _ensure_llm_env():

@@ -14,10 +14,10 @@ CRP standalone - Colab 手把手教程
 # ========== 1) 克隆仓库 ==========
 # 在 Colab 里取消下两行的注释运行
 # !rm -rf llmgp
-# !git clone https://github.com/Optima-CityU/llmgp.git
+# !git clone https://github.com/Liuliusui/llmgp.git
 
 from __future__ import annotations
-
+import os
 import sys
 from copy import deepcopy
 from pathlib import Path
@@ -30,10 +30,9 @@ import numpy as np
 ROOT = Path("/content/llmgp") if Path("/content/llmgp").exists() else Path(".").resolve()
 sys.path.append(str(ROOT))
 
-import os
-os.environ["LLM_HOST"] = "your-endpoint"
-os.environ["LLM_API_KEY"] = "sk-xxxx"
-os.environ["LLM_MODEL"] = "gpt-4o-mini"
+
+# 如需 LLM 评分，请在 Colab 单元里用 %env 或 os.environ 设置 LLM_HOST / LLM_API_KEY / LLM_MODEL
+LLM_TIMEOUT_MS = "15000"
 
 # ========== 3) 导入 CRP/LLMGP 核心模块 ==========
 from crp.bay import Bay
@@ -88,7 +87,8 @@ def make_pf_adapter(pf):
     def adapter(bay: Bay, seq: List[int], src_stack: int, dst_stack: int):
         bay.last_dst = dst_stack
         bay.current_stack = src_stack
-        return float(pf(CRPState(bay=bay, seq=list(seq), candidate=dst_stack)))
+        # 使用位置参数以避免笔记本里潜在的命名冲突
+        return float(pf(CRPState(bay, list(seq), dst_stack)))
     return adapter
 
 
@@ -134,6 +134,7 @@ sim = FunctionalSimulator(
 )
 
 # ========== 9) 运行一个快速搜索 ==========
+_ensure_llm_env()
 print(f"[RUN] CRP scheme={scheme}, pop_size={sim.config.pop_size}, ngen={sim.config.ngen}")
 result = sim.run()
 best = sim.best_pf()
@@ -152,4 +153,3 @@ def demo_call():
     return float(best(mock_state))
 
 print("Demo call on toy state (priority score):", demo_call())
-
