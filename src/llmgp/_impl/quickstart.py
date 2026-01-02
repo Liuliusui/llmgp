@@ -177,9 +177,4 @@ def quick_start(
     return EasyRunResult(pop=pop, log=log, hof=hof, pset=pset, scorer=scorer)
 
 
-# Backward compatibility shim: keep easy_run pointing to quick_start for existing callers.
-def easy_run(*args, **kwargs):
-    return quick_start(*args, **kwargs)
-
-
-__all__ = ["quick_start", "easy_run", "EasyRunResult"]
+__all__ = ["quick_start", "EasyRunResult"]

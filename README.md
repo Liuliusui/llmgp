@@ -12,7 +12,7 @@ Requires Python 3.9+, `deap`, `numpy`.
 
 ## Quickstart (single-input tasks)
 ```python
-from llmgp import gp_run_auto  # alias of quick_start
+from llmgp import quick_start
 
 class State(dict): ...
 
@@ -23,7 +23,7 @@ def cost_fn(pf):
     data = [(State(x=1, y=2), 0.0), (State(x=3, y=4), 1.0)]
     return sum((pf(s) - t) ** 2 for s, t in data) / len(data)
 
-result = gp_run_auto(
+result = quick_start(
     prompt="Regress a simple function of x and y.",
     cost_fn=cost_fn,
     feature_fns=[feat_x, feat_y],
@@ -107,4 +107,3 @@ uvicorn webapp:app --host 0.0.0.0 --port 8000
 ```
 
 Open `http://localhost:8000`. Runs can take ~30 minutes; keep the page open to watch status.
-

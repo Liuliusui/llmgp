@@ -9,7 +9,7 @@ from typing import Any, Callable, Optional
 from deap import algorithms, base, creator, gp, tools
 
 from .api import DEFAULT_ALPHA, DEFAULT_K_SELECT, build_llm_client, compose_system_prompt, llm_score_branch
-from .easy import EasyRunResult
+from .quickstart import EasyRunResult
 from .operators import mate_llm_biased, mut_llm_guarded
 from .fitness import eval_with_llm_shaping
 

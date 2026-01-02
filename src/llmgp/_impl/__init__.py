@@ -14,7 +14,7 @@ from .api import (
 from .fitness import eval_with_llm_shaping
 from .operators import best_slice_by_llm, mate_llm_biased, mate_nonllm_subtree, mut_llm_guarded
 from .pset_base import add_basic_primitives
-from .easy import easy_run, EasyRunResult, quick_start
+from .quickstart import EasyRunResult, quick_start
 from .trees import extract_subtree_indices_and_trees, extract_subtrees, pick_deep_k_slices, swap_slices_inplace
 
 __all__ = [
@@ -30,7 +30,6 @@ __all__ = [
     "mate_nonllm_subtree",
     "mut_llm_guarded",
     "quick_start",
-    "easy_run",
     "EasyRunResult",
     "add_basic_primitives",
     "extract_subtree_indices_and_trees",

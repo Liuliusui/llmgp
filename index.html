@@ -1,4 +1,4 @@
-Ôªø<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -147,7 +147,7 @@
             <p class="eyebrow" style="margin-bottom: 6px;">Framework at a glance</p>
             <ul class="muted" style="line-height: 1.6; padding-left: 16px;">
               <li>Unified GP representation + LLM content-aware evaluation, tailored for port scheduling.</li>
-              <li>Hides DEAP/GP internals; high-level <code>gp_run_auto</code> connects task description and cost function directly.</li>
+              <li>Hides DEAP/GP internals; high-level <code>quick_start</code> connects task description and cost function directly.</li>
               <li>Interpretable strategy trees + Python functions, ready for audits and simulation/control integration.</li>
               <li>Zero labeled data needed: iterate with simulation feedback plus LLM scoring.</li>
             </ul>
@@ -208,7 +208,7 @@
       <div class="card-surface">
         <h3>Non-GP-friendly &amp; educational</h3>
         <p class="muted">
-          High-level <code>gp_run_auto</code>: just provide state features, cost function, and task text; evolution is fully automated.
+          High-level <code>quick_start</code>: just provide state features, cost function, and task text; evolution is fully automated.
           Along the way, interpretable trees and optional LLM comments on candidate rules help students and non-GP experts see how GP actually builds and refines heuristics.
         </p>
       </div>
@@ -305,7 +305,7 @@
             LLMGGP represents dispatching rules as explicit GP expression trees instead of black-box models.
             By inspecting the best individuals and their key subtrees, users can see which state features enter
             the decision and how they are combined into a priority function. This representation also makes GP
-            easier to explain in teaching or training contexts, because a ‚Äúrule‚Äù corresponds to readable decision
+            easier to explain in teaching or training contexts, because a °∞rule°± corresponds to readable decision
             logic rather than just a fitness number.
           </p>
         </div>
@@ -370,7 +370,7 @@
 pip install deap numpy
 
 # 2) describe task
-from llmgp import gp_run_auto
+from llmgp import quick_start
 
 def feat_state(s):
     return float(s["load"])
@@ -379,7 +379,7 @@ def cost_fn(pf):
     return simulate(pf)  # lower is better
 
 # 3) run search
-res = gp_run_auto(
+res = quick_start(
     prompt="Port yard crane scheduling. Minimize delay.",
     feature_fns=[feat_state],
     cost_fn=cost_fn,

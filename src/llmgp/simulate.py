@@ -14,7 +14,7 @@ from typing import Any, Callable, List, Optional, Sequence, Tuple, Union
 
 from deap import gp
 
-from .easy import EasyRunResult, quick_start
+from .quickstart import EasyRunResult, quick_start
 from .llm import DEFAULT_ALPHA, DEFAULT_K_SELECT
 
 
